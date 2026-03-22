@@ -1,0 +1,1050 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GrantCheck - Free UK Energy Grants Eligibility Check</title>
+    <meta name="description" content="Check your eligibility for free UK energy grants. Government-backed schemes for boiler upgrades, insulation, heat pumps and more. Takes 60 seconds.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+        :root {
+            --green-600: #16a34a;
+            --green-700: #15803d;
+            --green-50: #f0fdf4;
+            --blue-600: #2563eb;
+            --blue-700: #1d4ed8;
+            --gray-50: #f9fafb;
+            --gray-100: #f3f4f6;
+            --gray-200: #e5e7eb;
+            --gray-300: #d1d5db;
+            --gray-500: #6b7280;
+            --gray-700: #374151;
+            --gray-800: #1f2937;
+            --gray-900: #111827;
+            --red-500: #ef4444;
+            --orange-500: #f97316;
+            --radius: 12px;
+            --shadow: 0 1px 3px rgba(0,0,0,.1), 0 1px 2px rgba(0,0,0,.06);
+            --shadow-lg: 0 10px 15px -3px rgba(0,0,0,.1), 0 4px 6px -4px rgba(0,0,0,.1);
+        }
+
+        body {
+            font-family: 'Inter', system-ui, -apple-system, sans-serif;
+            color: var(--gray-800);
+            background: #fff;
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* ── Header ── */
+        .header {
+            background: #fff;
+            border-bottom: 1px solid var(--gray-200);
+            padding: 12px 20px;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        .header-inner {
+            max-width: 1100px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: var(--green-700);
+            text-decoration: none;
+            letter-spacing: -0.5px;
+        }
+        .logo span { color: var(--gray-900); }
+        .header-cta {
+            background: var(--green-600);
+            color: #fff;
+            padding: 8px 18px;
+            border-radius: 8px;
+            font-size: .875rem;
+            font-weight: 600;
+            text-decoration: none;
+            transition: background .2s;
+        }
+        .header-cta:hover { background: var(--green-700); }
+
+        /* ── Hero ── */
+        .hero {
+            background: linear-gradient(135deg, var(--green-50) 0%, #ecfdf5 50%, #f0f9ff 100%);
+            padding: 48px 20px 56px;
+            text-align: center;
+        }
+        .hero-inner { max-width: 680px; margin: 0 auto; }
+        .hero-badge {
+            display: inline-block;
+            background: #fff;
+            border: 1px solid var(--green-600);
+            color: var(--green-700);
+            font-size: .75rem;
+            font-weight: 600;
+            padding: 4px 14px;
+            border-radius: 50px;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            letter-spacing: .5px;
+        }
+        .hero h1 {
+            font-size: clamp(1.75rem, 5vw, 2.75rem);
+            font-weight: 800;
+            line-height: 1.15;
+            color: var(--gray-900);
+            margin-bottom: 16px;
+            letter-spacing: -0.5px;
+        }
+        .hero h1 em {
+            font-style: normal;
+            color: var(--green-600);
+        }
+        .hero p {
+            font-size: 1.1rem;
+            color: var(--gray-500);
+            margin-bottom: 28px;
+            max-width: 520px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        .hero-stats {
+            display: flex;
+            justify-content: center;
+            gap: 32px;
+            margin-top: 32px;
+            flex-wrap: wrap;
+        }
+        .hero-stat {
+            text-align: center;
+        }
+        .hero-stat strong {
+            display: block;
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: var(--gray-900);
+        }
+        .hero-stat span {
+            font-size: .8rem;
+            color: var(--gray-500);
+        }
+
+        /* ── Form Section ── */
+        .form-section {
+            padding: 48px 20px;
+            background: #fff;
+        }
+        .form-container {
+            max-width: 560px;
+            margin: 0 auto;
+            background: #fff;
+            border: 1px solid var(--gray-200);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow-lg);
+            overflow: hidden;
+        }
+        .form-header {
+            background: var(--gray-900);
+            color: #fff;
+            padding: 20px 24px;
+            text-align: center;
+        }
+        .form-header h2 {
+            font-size: 1.25rem;
+            font-weight: 700;
+            margin-bottom: 4px;
+        }
+        .form-header p {
+            font-size: .85rem;
+            opacity: .7;
+        }
+
+        /* Progress bar */
+        .progress-bar {
+            height: 4px;
+            background: var(--gray-200);
+        }
+        .progress-fill {
+            height: 100%;
+            background: var(--green-600);
+            transition: width .4s ease;
+            width: 20%;
+        }
+
+        /* Steps */
+        .form-body { padding: 28px 24px; }
+        .step { display: none; }
+        .step.active { display: block; }
+        .step-label {
+            font-size: .75rem;
+            font-weight: 600;
+            color: var(--gray-500);
+            text-transform: uppercase;
+            letter-spacing: .5px;
+            margin-bottom: 8px;
+        }
+        .step-question {
+            font-size: 1.15rem;
+            font-weight: 700;
+            color: var(--gray-900);
+            margin-bottom: 20px;
+            line-height: 1.3;
+        }
+
+        /* Option grid */
+        .option-grid {
+            display: grid;
+            gap: 10px;
+        }
+        .option-grid.cols-2 {
+            grid-template-columns: 1fr 1fr;
+        }
+        .option-btn {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 14px 16px;
+            border: 2px solid var(--gray-200);
+            border-radius: 10px;
+            background: #fff;
+            cursor: pointer;
+            transition: all .15s;
+            font-size: .95rem;
+            font-weight: 500;
+            color: var(--gray-700);
+            text-align: left;
+        }
+        .option-btn:hover {
+            border-color: var(--green-600);
+            background: var(--green-50);
+        }
+        .option-btn.selected {
+            border-color: var(--green-600);
+            background: var(--green-50);
+            color: var(--green-700);
+            font-weight: 600;
+        }
+        .option-icon {
+            font-size: 1.3rem;
+            flex-shrink: 0;
+            width: 28px;
+            text-align: center;
+        }
+
+        /* Form inputs */
+        .form-group { margin-bottom: 16px; }
+        .form-group label {
+            display: block;
+            font-size: .85rem;
+            font-weight: 600;
+            color: var(--gray-700);
+            margin-bottom: 6px;
+        }
+        .form-group input,
+        .form-group select {
+            width: 100%;
+            padding: 12px 14px;
+            border: 2px solid var(--gray-200);
+            border-radius: 10px;
+            font-size: 1rem;
+            font-family: inherit;
+            color: var(--gray-800);
+            transition: border-color .2s;
+            background: #fff;
+        }
+        .form-group input:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: var(--green-600);
+        }
+        .form-group input.error {
+            border-color: var(--red-500);
+        }
+        .error-msg {
+            color: var(--red-500);
+            font-size: .8rem;
+            margin-top: 4px;
+            display: none;
+        }
+
+        /* Buttons */
+        .btn-next {
+            width: 100%;
+            padding: 14px;
+            background: var(--green-600);
+            color: #fff;
+            border: none;
+            border-radius: 10px;
+            font-size: 1rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: background .2s;
+            margin-top: 8px;
+            font-family: inherit;
+        }
+        .btn-next:hover { background: var(--green-700); }
+        .btn-next:disabled {
+            background: var(--gray-300);
+            cursor: not-allowed;
+        }
+        .btn-back {
+            display: inline-block;
+            background: none;
+            border: none;
+            color: var(--gray-500);
+            font-size: .85rem;
+            cursor: pointer;
+            padding: 8px 0;
+            margin-top: 8px;
+            font-family: inherit;
+        }
+        .btn-back:hover { color: var(--gray-700); }
+
+        .form-footer {
+            text-align: center;
+            padding: 0 24px 20px;
+            font-size: .75rem;
+            color: var(--gray-500);
+        }
+        .form-footer a { color: var(--gray-500); }
+
+        /* Trust strip */
+        .trust-strip {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 20px;
+            flex-wrap: wrap;
+        }
+        .trust-item {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: .8rem;
+            color: var(--gray-500);
+        }
+        .trust-item svg {
+            width: 16px;
+            height: 16px;
+            fill: var(--green-600);
+        }
+
+        /* ── How It Works ── */
+        .how-section {
+            padding: 56px 20px;
+            background: var(--gray-50);
+        }
+        .how-inner {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        .section-title {
+            text-align: center;
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: var(--gray-900);
+            margin-bottom: 40px;
+        }
+        .how-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 28px;
+        }
+        .how-card {
+            background: #fff;
+            border-radius: var(--radius);
+            padding: 28px 24px;
+            text-align: center;
+            box-shadow: var(--shadow);
+        }
+        .how-num {
+            width: 40px;
+            height: 40px;
+            background: var(--green-50);
+            color: var(--green-700);
+            border-radius: 50%;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 800;
+            font-size: 1.1rem;
+            margin-bottom: 14px;
+        }
+        .how-card h3 {
+            font-size: 1rem;
+            font-weight: 700;
+            margin-bottom: 8px;
+            color: var(--gray-900);
+        }
+        .how-card p {
+            font-size: .875rem;
+            color: var(--gray-500);
+        }
+
+        /* ── Grants ── */
+        .grants-section {
+            padding: 56px 20px;
+            background: #fff;
+        }
+        .grants-inner { max-width: 900px; margin: 0 auto; }
+        .grant-card {
+            display: flex;
+            gap: 20px;
+            padding: 24px;
+            border: 1px solid var(--gray-200);
+            border-radius: var(--radius);
+            margin-bottom: 16px;
+            align-items: flex-start;
+        }
+        .grant-icon {
+            font-size: 2rem;
+            flex-shrink: 0;
+        }
+        .grant-card h3 {
+            font-size: 1rem;
+            font-weight: 700;
+            color: var(--gray-900);
+            margin-bottom: 4px;
+        }
+        .grant-card p {
+            font-size: .875rem;
+            color: var(--gray-500);
+            margin-bottom: 8px;
+        }
+        .grant-tag {
+            display: inline-block;
+            background: var(--green-50);
+            color: var(--green-700);
+            font-size: .75rem;
+            font-weight: 600;
+            padding: 3px 10px;
+            border-radius: 50px;
+        }
+
+        /* ── FAQ ── */
+        .faq-section {
+            padding: 56px 20px;
+            background: var(--gray-50);
+        }
+        .faq-inner { max-width: 680px; margin: 0 auto; }
+        .faq-item {
+            border-bottom: 1px solid var(--gray-200);
+            padding: 18px 0;
+        }
+        .faq-q {
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 12px;
+            color: var(--gray-900);
+        }
+        .faq-q::after {
+            content: '+';
+            font-size: 1.3rem;
+            font-weight: 400;
+            color: var(--gray-500);
+            flex-shrink: 0;
+            transition: transform .2s;
+        }
+        .faq-item.open .faq-q::after {
+            content: '\2212';
+        }
+        .faq-a {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height .3s ease;
+            font-size: .9rem;
+            color: var(--gray-500);
+        }
+        .faq-item.open .faq-a {
+            max-height: 200px;
+            padding-top: 12px;
+        }
+
+        /* ── CTA ── */
+        .cta-section {
+            padding: 56px 20px;
+            background: var(--gray-900);
+            text-align: center;
+            color: #fff;
+        }
+        .cta-section h2 {
+            font-size: 1.5rem;
+            font-weight: 800;
+            margin-bottom: 12px;
+        }
+        .cta-section p {
+            opacity: .7;
+            margin-bottom: 24px;
+            max-width: 480px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        .cta-btn {
+            display: inline-block;
+            background: var(--green-600);
+            color: #fff;
+            padding: 14px 36px;
+            border-radius: 10px;
+            font-size: 1rem;
+            font-weight: 700;
+            text-decoration: none;
+            transition: background .2s;
+        }
+        .cta-btn:hover { background: var(--green-700); }
+
+        /* ── Footer ── */
+        .footer {
+            padding: 32px 20px;
+            background: var(--gray-900);
+            border-top: 1px solid rgba(255,255,255,.1);
+            text-align: center;
+            font-size: .8rem;
+            color: rgba(255,255,255,.4);
+        }
+        .footer a {
+            color: rgba(255,255,255,.5);
+            text-decoration: none;
+        }
+        .footer a:hover { color: #fff; }
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 24px;
+            margin-bottom: 12px;
+        }
+
+        /* ── Success state ── */
+        .success-state {
+            text-align: center;
+            padding: 40px 24px;
+            display: none;
+        }
+        .success-state.active { display: block; }
+        .success-check {
+            width: 64px;
+            height: 64px;
+            background: var(--green-50);
+            border-radius: 50%;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+        .success-check svg {
+            width: 32px;
+            height: 32px;
+            stroke: var(--green-600);
+        }
+        .success-state h3 {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--gray-900);
+            margin-bottom: 8px;
+        }
+        .success-state p {
+            color: var(--gray-500);
+            font-size: .9rem;
+        }
+
+        /* ── Responsive ── */
+        @media (max-width: 480px) {
+            .hero { padding: 36px 16px 40px; }
+            .form-body { padding: 20px 16px; }
+            .hero-stats { gap: 20px; }
+            .grant-card { flex-direction: column; gap: 12px; }
+            .option-grid.cols-2 { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header -->
+    <header class="header">
+        <div class="header-inner">
+            <a href="#" class="logo">Grant<span>Check</span></a>
+            <a href="#eligibility-form" class="header-cta">Check Eligibility</a>
+        </div>
+    </header>
+
+    <!-- Hero -->
+    <section class="hero">
+        <div class="hero-inner">
+            <div class="hero-badge">2026 Grants Available</div>
+            <h1>Could You Get <em>Free Energy Upgrades</em> Worth Up To &pound;25,000?</h1>
+            <p>Thousands of UK homeowners qualify for government-funded boiler replacements, insulation, and heat pumps. Check in 60 seconds.</p>
+            <a href="#eligibility-form" class="btn-next" style="max-width:320px; display:inline-block; text-decoration:none; text-align:center;">Check My Eligibility &rarr;</a>
+            <div class="hero-stats">
+                <div class="hero-stat">
+                    <strong>47,000+</strong>
+                    <span>Checks completed</span>
+                </div>
+                <div class="hero-stat">
+                    <strong>&pound;14.2M</strong>
+                    <span>Grants awarded</span>
+                </div>
+                <div class="hero-stat">
+                    <strong>60 sec</strong>
+                    <span>Quick check</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Eligibility Form -->
+    <section class="form-section" id="eligibility-form">
+        <div class="form-container">
+            <div class="form-header">
+                <h2>Free Eligibility Check</h2>
+                <p>No obligation &middot; Results in 60 seconds</p>
+            </div>
+            <div class="progress-bar">
+                <div class="progress-fill" id="progressFill"></div>
+            </div>
+
+            <div class="form-body" id="formBody">
+
+                <!-- Step 1: Property Type -->
+                <div class="step active" data-step="1">
+                    <div class="step-label">Step 1 of 5</div>
+                    <div class="step-question">What type of property do you live in?</div>
+                    <div class="option-grid cols-2">
+                        <button class="option-btn" data-field="propertyType" data-value="detached">
+                            <span class="option-icon">🏠</span> Detached
+                        </button>
+                        <button class="option-btn" data-field="propertyType" data-value="semi-detached">
+                            <span class="option-icon">🏘️</span> Semi-detached
+                        </button>
+                        <button class="option-btn" data-field="propertyType" data-value="terraced">
+                            <span class="option-icon">🏡</span> Terraced
+                        </button>
+                        <button class="option-btn" data-field="propertyType" data-value="flat">
+                            <span class="option-icon">🏢</span> Flat / Apartment
+                        </button>
+                        <button class="option-btn" data-field="propertyType" data-value="bungalow">
+                            <span class="option-icon">🏠</span> Bungalow
+                        </button>
+                        <button class="option-btn" data-field="propertyType" data-value="other">
+                            <span class="option-icon">🏗️</span> Other
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Step 2: Ownership -->
+                <div class="step" data-step="2">
+                    <div class="step-label">Step 2 of 5</div>
+                    <div class="step-question">Do you own or rent your property?</div>
+                    <div class="option-grid">
+                        <button class="option-btn" data-field="ownership" data-value="owner">
+                            <span class="option-icon">🔑</span> Owner-occupier
+                        </button>
+                        <button class="option-btn" data-field="ownership" data-value="private-tenant">
+                            <span class="option-icon">📋</span> Private tenant
+                        </button>
+                        <button class="option-btn" data-field="ownership" data-value="social-tenant">
+                            <span class="option-icon">🏛️</span> Social housing tenant
+                        </button>
+                        <button class="option-btn" data-field="ownership" data-value="landlord">
+                            <span class="option-icon">🏘️</span> Landlord
+                        </button>
+                    </div>
+                    <button class="btn-back" onclick="goBack()">&larr; Back</button>
+                </div>
+
+                <!-- Step 3: Benefits -->
+                <div class="step" data-step="3">
+                    <div class="step-label">Step 3 of 5</div>
+                    <div class="step-question">Do you or anyone in your household receive any benefits?</div>
+                    <div class="option-grid">
+                        <button class="option-btn" data-field="benefits" data-value="universal-credit">
+                            <span class="option-icon">✅</span> Universal Credit
+                        </button>
+                        <button class="option-btn" data-field="benefits" data-value="pension-credit">
+                            <span class="option-icon">✅</span> Pension Credit
+                        </button>
+                        <button class="option-btn" data-field="benefits" data-value="child-tax">
+                            <span class="option-icon">✅</span> Child Tax Credit
+                        </button>
+                        <button class="option-btn" data-field="benefits" data-value="esa">
+                            <span class="option-icon">✅</span> ESA / Income Support
+                        </button>
+                        <button class="option-btn" data-field="benefits" data-value="other-benefit">
+                            <span class="option-icon">✅</span> Other benefit
+                        </button>
+                        <button class="option-btn" data-field="benefits" data-value="none">
+                            <span class="option-icon">❌</span> No benefits
+                        </button>
+                    </div>
+                    <button class="btn-back" onclick="goBack()">&larr; Back</button>
+                </div>
+
+                <!-- Step 4: Current Heating -->
+                <div class="step" data-step="4">
+                    <div class="step-label">Step 4 of 5</div>
+                    <div class="step-question">What is your current heating system?</div>
+                    <div class="option-grid cols-2">
+                        <button class="option-btn" data-field="heating" data-value="gas-boiler">
+                            <span class="option-icon">🔥</span> Gas boiler
+                        </button>
+                        <button class="option-btn" data-field="heating" data-value="oil-boiler">
+                            <span class="option-icon">🛢️</span> Oil boiler
+                        </button>
+                        <button class="option-btn" data-field="heating" data-value="electric">
+                            <span class="option-icon">⚡</span> Electric heating
+                        </button>
+                        <button class="option-btn" data-field="heating" data-value="lpg">
+                            <span class="option-icon">🔵</span> LPG
+                        </button>
+                        <button class="option-btn" data-field="heating" data-value="storage">
+                            <span class="option-icon">📦</span> Storage heaters
+                        </button>
+                        <button class="option-btn" data-field="heating" data-value="none">
+                            <span class="option-icon">❄️</span> No heating
+                        </button>
+                    </div>
+                    <button class="btn-back" onclick="goBack()">&larr; Back</button>
+                </div>
+
+                <!-- Step 5: Contact Details -->
+                <div class="step" data-step="5">
+                    <div class="step-label">Step 5 of 5</div>
+                    <div class="step-question">Where should we send your results?</div>
+                    <form id="leadForm" novalidate>
+                        <div class="form-group">
+                            <label for="fullName">Full name</label>
+                            <input type="text" id="fullName" name="fullName" placeholder="e.g. John Smith" required autocomplete="name">
+                            <div class="error-msg" id="nameError">Please enter your name</div>
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Email address</label>
+                            <input type="email" id="email" name="email" placeholder="e.g. john@email.com" required autocomplete="email">
+                            <div class="error-msg" id="emailError">Please enter a valid email</div>
+                        </div>
+                        <div class="form-group">
+                            <label for="phone">Phone number</label>
+                            <input type="tel" id="phone" name="phone" placeholder="e.g. 07700 900000" required autocomplete="tel">
+                            <div class="error-msg" id="phoneError">Please enter a valid UK phone number</div>
+                        </div>
+                        <div class="form-group">
+                            <label for="postcode">Postcode</label>
+                            <input type="text" id="postcode" name="postcode" placeholder="e.g. SW1A 1AA" required autocomplete="postal-code" style="text-transform:uppercase;">
+                            <div class="error-msg" id="postcodeError">Please enter a valid UK postcode</div>
+                        </div>
+                        <button type="submit" class="btn-next" id="submitBtn">Get My Free Results &rarr;</button>
+                    </form>
+                    <button class="btn-back" onclick="goBack()">&larr; Back</button>
+                </div>
+            </div>
+
+            <!-- Success -->
+            <div class="success-state" id="successState">
+                <div class="success-check">
+                    <svg viewBox="0 0 24 24" fill="none" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                        <polyline points="20 6 9 17 4 12"></polyline>
+                    </svg>
+                </div>
+                <h3>Great News!</h3>
+                <p>Based on your answers, you may qualify for energy grants. A specialist will call you within 24 hours to confirm your eligibility and next steps.</p>
+            </div>
+
+            <div class="form-footer">
+                <div class="trust-strip">
+                    <div class="trust-item">
+                        <svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                        Data protected
+                    </div>
+                    <div class="trust-item">
+                        <svg viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01" fill="none" stroke="currentColor" stroke-width="2"/></svg>
+                        No obligation
+                    </div>
+                    <div class="trust-item">
+                        <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14" fill="none" stroke="#fff" stroke-width="2"/></svg>
+                        60-second check
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- How it works -->
+    <section class="how-section">
+        <div class="how-inner">
+            <h2 class="section-title">How It Works</h2>
+            <div class="how-grid">
+                <div class="how-card">
+                    <div class="how-num">1</div>
+                    <h3>Answer Quick Questions</h3>
+                    <p>Tell us about your property and household. It takes less than 60 seconds.</p>
+                </div>
+                <div class="how-card">
+                    <div class="how-num">2</div>
+                    <h3>We Check Eligibility</h3>
+                    <p>Our system cross-references your details against all current UK energy grant schemes.</p>
+                </div>
+                <div class="how-card">
+                    <div class="how-num">3</div>
+                    <h3>Get Your Results</h3>
+                    <p>A qualified energy specialist contacts you with your personalised grant options.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Available Grants -->
+    <section class="grants-section">
+        <div class="grants-inner">
+            <h2 class="section-title">Available Grants for 2026</h2>
+            <div class="grant-card">
+                <div class="grant-icon">🔥</div>
+                <div>
+                    <h3>Boiler Upgrade Scheme (BUS)</h3>
+                    <p>Get up to &pound;7,500 towards a new heat pump or biomass boiler to replace your fossil fuel heating system.</p>
+                    <span class="grant-tag">Up to &pound;7,500</span>
+                </div>
+            </div>
+            <div class="grant-card">
+                <div class="grant-icon">🏠</div>
+                <div>
+                    <h3>ECO4 &amp; Great British Insulation Scheme</h3>
+                    <p>Free insulation, heating upgrades, and energy efficiency improvements for eligible households.</p>
+                    <span class="grant-tag">Fully funded</span>
+                </div>
+            </div>
+            <div class="grant-card">
+                <div class="grant-icon">☀️</div>
+                <div>
+                    <h3>Home Upgrade Grant (HUG2)</h3>
+                    <p>Up to &pound;25,000 in funding for energy efficiency measures in off-gas-grid homes with low EPC ratings.</p>
+                    <span class="grant-tag">Up to &pound;25,000</span>
+                </div>
+            </div>
+            <div class="grant-card">
+                <div class="grant-icon">⚡</div>
+                <div>
+                    <h3>Local Authority Schemes</h3>
+                    <p>Additional funding available through your local council for solar panels, battery storage, and more.</p>
+                    <span class="grant-tag">Varies by area</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ -->
+    <section class="faq-section">
+        <div class="faq-inner">
+            <h2 class="section-title">Frequently Asked Questions</h2>
+            <div class="faq-item">
+                <div class="faq-q">Who is eligible for energy grants?</div>
+                <div class="faq-a">Eligibility varies by scheme. Generally, homeowners and tenants on certain benefits, or those with low household income and poor energy efficiency ratings (EPC D or below), may qualify. Our free check covers all current schemes.</div>
+            </div>
+            <div class="faq-item">
+                <div class="faq-q">Is this check really free?</div>
+                <div class="faq-a">Yes, completely free with no obligation. We earn a referral fee from approved installers only if you proceed with an installation &mdash; you never pay us anything.</div>
+            </div>
+            <div class="faq-item">
+                <div class="faq-q">How long does the process take?</div>
+                <div class="faq-a">The eligibility check takes 60 seconds. If you qualify, a specialist will contact you within 24 hours. From survey to installation typically takes 4&ndash;8 weeks depending on the scheme.</div>
+            </div>
+            <div class="faq-item">
+                <div class="faq-q">What happens to my data?</div>
+                <div class="faq-a">Your data is processed securely and shared only with vetted energy scheme partners to assess your eligibility. We comply with UK GDPR. See our privacy policy for full details.</div>
+            </div>
+            <div class="faq-item">
+                <div class="faq-q">Do I need to be on benefits to qualify?</div>
+                <div class="faq-a">Not necessarily. While many schemes prioritise benefit recipients, some &mdash; like the Boiler Upgrade Scheme &mdash; are open to all homeowners regardless of income. That is why it is worth checking.</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Bottom CTA -->
+    <section class="cta-section">
+        <h2>Don't Miss Out on Free Funding</h2>
+        <p>Grant budgets are limited and allocated on a first-come, first-served basis. Check your eligibility today.</p>
+        <a href="#eligibility-form" class="cta-btn">Check My Eligibility &rarr;</a>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-links">
+            <a href="#">Privacy Policy</a>
+            <a href="#">Terms of Service</a>
+            <a href="#">Contact Us</a>
+        </div>
+        <p>&copy; 2026 GrantCheck. All rights reserved. GrantCheck is a trading name. We are not a government body.</p>
+    </footer>
+
+    <script>
+        // ── State ──
+        const formData = {};
+        let currentStep = 1;
+        const totalSteps = 5;
+
+        // ── Option button clicks (steps 1-4) ──
+        document.querySelectorAll('.option-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const field = btn.dataset.field;
+                const value = btn.dataset.value;
+                formData[field] = value;
+
+                // Highlight selected
+                btn.closest('.option-grid').querySelectorAll('.option-btn').forEach(b => b.classList.remove('selected'));
+                btn.classList.add('selected');
+
+                // Auto-advance after short delay
+                setTimeout(() => goNext(), 250);
+            });
+        });
+
+        function goNext() {
+            if (currentStep >= totalSteps) return;
+            currentStep++;
+            updateView();
+        }
+
+        function goBack() {
+            if (currentStep <= 1) return;
+            currentStep--;
+            updateView();
+        }
+
+        function updateView() {
+            document.querySelectorAll('.step').forEach(s => s.classList.remove('active'));
+            const next = document.querySelector(`[data-step="${currentStep}"]`);
+            if (next) next.classList.add('active');
+            document.getElementById('progressFill').style.width = `${(currentStep / totalSteps) * 100}%`;
+        }
+
+        // ── Form submission ──
+        document.getElementById('leadForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            if (!validateForm()) return;
+
+            const btn = document.getElementById('submitBtn');
+            btn.disabled = true;
+            btn.textContent = 'Checking...';
+
+            formData.fullName = document.getElementById('fullName').value.trim();
+            formData.email = document.getElementById('email').value.trim();
+            formData.phone = document.getElementById('phone').value.trim();
+            formData.postcode = document.getElementById('postcode').value.trim().toUpperCase();
+            formData.submittedAt = new Date().toISOString();
+
+            fetch('/submit', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(formData),
+            })
+            .then(res => res.json())
+            .then(data => {
+                if (data.success) {
+                    document.getElementById('formBody').style.display = 'none';
+                    document.querySelector('.progress-bar').style.display = 'none';
+                    document.getElementById('successState').classList.add('active');
+
+                    if (typeof gtag === 'function') {
+                        gtag('event', 'generate_lead', { currency: 'GBP', value: 1 });
+                    }
+                    if (typeof fbq === 'function') {
+                        fbq('track', 'Lead');
+                    }
+                } else {
+                    alert(data.message || 'Something went wrong. Please try again.');
+                    btn.disabled = false;
+                    btn.textContent = 'Get My Free Results \u2192';
+                }
+            })
+            .catch(() => {
+                alert('Network error. Please check your connection and try again.');
+                btn.disabled = false;
+                btn.textContent = 'Get My Free Results \u2192';
+            });
+        });
+
+        function validateForm() {
+            let valid = true;
+
+            const name = document.getElementById('fullName');
+            const email = document.getElementById('email');
+            const phone = document.getElementById('phone');
+            const postcode = document.getElementById('postcode');
+
+            // Name
+            if (!name.value.trim() || name.value.trim().length < 2) {
+                showError(name, 'nameError');
+                valid = false;
+            } else {
+                clearError(name, 'nameError');
+            }
+
+            // Email
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailRegex.test(email.value.trim())) {
+                showError(email, 'emailError');
+                valid = false;
+            } else {
+                clearError(email, 'emailError');
+            }
+
+            // Phone — UK format
+            const phoneClean = phone.value.replace(/[\s\-()]/g, '');
+            const phoneRegex = /^(\+44|0044|0)[1-9]\d{8,9}$/;
+            if (!phoneRegex.test(phoneClean)) {
+                showError(phone, 'phoneError');
+                valid = false;
+            } else {
+                clearError(phone, 'phoneError');
+            }
+
+            // Postcode — UK format
+            const pcRegex = /^[A-Z]{1,2}\d[A-Z\d]?\s?\d[A-Z]{2}$/i;
+            if (!pcRegex.test(postcode.value.trim())) {
+                showError(postcode, 'postcodeError');
+                valid = false;
+            } else {
+                clearError(postcode, 'postcodeError');
+            }
+
+            return valid;
+        }
+
+        function showError(input, errorId) {
+            input.classList.add('error');
+            document.getElementById(errorId).style.display = 'block';
+        }
+
+        function clearError(input, errorId) {
+            input.classList.remove('error');
+            document.getElementById(errorId).style.display = 'none';
+        }
+
+        // ── FAQ accordion ──
+        document.querySelectorAll('.faq-q').forEach(q => {
+            q.addEventListener('click', () => {
+                q.parentElement.classList.toggle('open');
+            });
+        });
+
+        // ── Smooth scroll ──
+        document.querySelectorAll('a[href^="#"]').forEach(a => {
+            a.addEventListener('click', e => {
+                const target = document.querySelector(a.getAttribute('href'));
+                if (target) {
+                    e.preventDefault();
+                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            });
+        });
+    </script>
+</body>
+</html>
